@@ -1,13 +1,29 @@
-import { Link } from 'react-router-dom';
-import './App.css';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import "./App.css";
+import axios from "axios";
 
 function Login() {
+  const navigate = useNavigate(); 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add logic for login or authentication here
-let email = event.target.email.value;
-let password = event.target.email.value
-    console.log(event.target.email.value);
+    let email = event.target.email.value;
+    let password = event.target.password.value;
+    axios.post("http://localhost:3000/login", {
+        email: email,
+        pass: password,
+      })
+      .then((res) => {
+        const token = res.data.token;
+        const objectid = res.data.id;
+        console.log("login done ", res);
+        localStorage.setItem("token", token);
+        localStorage.setItem("objectid", objectid);
+        navigate("/todos")
+      })
+      .catch((err) => console.log(err));
+
+    console.log(email, password);
   };
 
   return (
@@ -23,7 +39,9 @@ let password = event.target.email.value
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password" required />
           </div>
-          <button type="submit" className="btn">Login</button>
+          <button type="submit" className="btn">
+            Login
+          </button>
           <p>
             Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>

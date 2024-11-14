@@ -26,7 +26,7 @@ function auth(req,res,next){
 }
 
 
-app.get("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, pass } = req.body;
 
   const user = await usermodel.findOne({ useremail: email });

@@ -1,10 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
+import axios from 'axios';
+
 
 function Signup() {
+  const navigate = useNavigate(); 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+    let username = event.target.username.value;
+    let email = event.target.email.value;
+    let password = event.target.password.value;
+
+    axios.post("http://localhost:3000/signup",{
+      username: username,
+      useremail: email,
+      password: password
+    })
+    .then((res)=>{
+      navigate("/");
+      console.log(res)
+    })
+    .catch(err => console.log(err))
     console.log('Signup form submitted');
   };
 
