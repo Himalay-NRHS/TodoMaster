@@ -1,0 +1,95 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body and background styling */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Container for centering the form */
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Form container styling */
+  .form-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  /* Input group styling */
+  .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Button styling */
+  button.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button.btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Links styling */
+  a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive design for mobile screens */
+  @media (max-width: 600px) {
+    .form-container {
+      padding: 20px;
+      width: 90%;
+    }
+  }
+  
