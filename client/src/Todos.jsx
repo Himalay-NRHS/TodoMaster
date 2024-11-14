@@ -1,7 +1,22 @@
-import React from "react";
-import styles from "./Todos.module.css";
+import React, { useEffect } from "react";
+import styles from "./css_modules/Todos.module.css";
+import Item from "./Item.jsx";
+import axios from 'axios';
+
+
+
 function Todos() {
 let name = "jake"
+useEffect(
+  () => {
+    const token = localStorage.getItem('token')
+ const decoded= axios.get("http://localhost:3000/gettodos",
+    {headers:{
+      authorization : `bearer ${token}`
+    },}
+  ).then(res=>console.log(res.data.todos.todos[0].task))
+  .catch(err=>console.log(err))
+},[])
 
   function logout(){ 
   }
@@ -27,6 +42,10 @@ let name = "jake"
           placeholder="Enter your next task"
         />
       </div>
+      <div className={styles.done}>+</div>
+    </div>
+    <div className={styles.container}>
+<Item />
     </div>
  </div>
 

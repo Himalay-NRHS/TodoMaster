@@ -6,25 +6,26 @@ const { usermodel, todomodel } = require("./db.js");
 const bcryptjs = require("bcryptjs");
 const app = express();
 app.use(cors()); 
-
 app.use(express.json());
-
-function auth(req,res,next){
-  const token = req.headers['token'];
+function auth(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  console.log("Extracted Token:", token); // Debugging line
+  
   if (!token) {
     return res.status(401).send('Token required');
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
+      console.log("JWT Verification Error:", err); // Detailed error message
       return res.status(403).send('Invalid token');
     }
-    
+
     req.userinfo = decoded;
     next();
   });
 }
-
 
 app.post("/login", async (req, res) => {
   const { email, pass } = req.body;
@@ -51,46 +52,42 @@ app.post("/login", async (req, res) => {
     console.log("User isn't registered");
   }
 
-  res.send("filtered user");
 });
 
 app.post("/signup", async (req, res) => {
   try {
     let { username, useremail, password } = req.body;
-    if(!(username && useremail && password)){
-      return res.status(400).send("All fields are required")
-    }else{
-    console.log(username, useremail, password);
-    password = bcryptjs.hashSync(password, 10);
-    
-    await usermodel.create({ username, useremail, password });
-    const user = await usermodel.findOne({ useremail: useremail });
+    if (!(username && useremail && password)) {
+      return res.status(400).send("All fields are required");
+    } else {
+      console.log(username, useremail, password);
 
-    await todomodel.create({ todos: [], userid: user._id });
-    console.log("User successfully signed up");
-    res.status(200);
-  } 
+      // Hash the password before storing it
+      password = bcryptjs.hashSync(password, 10);
 
+      // Create the user in the database
+      await usermodel.create({ username, useremail, password });
 
+      // Retrieve the user to get their _id
+      const user = await usermodel.findOne({ useremail: useremail });
+
+      // Correct the todo object creation
+      await todomodel.create({
+        todos: [{ task: "ntg", completed: false }],
+        userid: user._id
+      });
+
+      console.log("User successfully signed up");
+
+      // Respond with success
+      return res.status(200).send("Signup successful");
+    }
   } catch (e) {
-  
     console.log("Error in signup block ", e);
+    res.status(500).send("Error during signup");
   }
-  res.send("Signup done");
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
-
-app.get("/gettodos",auth, async (req,res)=>{
-
-const user = await usermodel.findOne({useremail:req.userinfo})
-const todos = await todomodel.findOne({userid:user._id})
-res.json({
-  user,todos
-})
-})
 
 app.post("/addone", auth, async (req, res) => {
   try {
@@ -117,3 +114,15 @@ app.post("/addone", auth, async (req, res) => {
     res.status(500).send({ message: 'Error updating todos' });
   }
 });
+app.get("/gettodos",auth, async (req,res)=>{
+console.log("request came withh token ", req.userinfo)
+  const user = await usermodel.findOne({useremail:req.userinfo})
+  const todos = await todomodel.findOne({userid:user._id})
+  res.json({
+    user,todos
+  })
+  })
+
+app.listen(3000,()=>{
+  console.log("port running on 3000")
+})

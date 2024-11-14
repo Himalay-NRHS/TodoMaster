@@ -1,5 +1,5 @@
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import './App.css';
+import "./css_modules/App.css";
 import axios from 'axios';
 
 

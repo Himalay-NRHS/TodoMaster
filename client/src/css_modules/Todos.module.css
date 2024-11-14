@@ -28,9 +28,33 @@ padding-top: 20px;
 .todocontainer{
     background-color: white;
     margin:auto auto;
-    border:5px solid black;
+    border:3px solid black;
     margin-top: 50px;
     border-radius: 10px;
     width:35vw;
     min-height:40vh;
+}
+.enter{
+    display: flex;
+    gap: 5px;
+}
+.task{
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 85%;
+}
+.done{
+    width: 12%;
+    background-color: aqua;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    border: 1px solid  black;
+    border-radius: 5px;
+    
+}
+.container{
+    padding: 10px;
 }

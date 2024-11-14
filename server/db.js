@@ -10,12 +10,18 @@ const User = new mongoose.Schema({
 });
 
 const todo = new mongoose.Schema({
-  todos: [String],
-  userid: { type: mongoose.Schema.Types.ObjectId },
+  todos: [
+    {
+      task: { type: String, required: true },
+      completed: { type: Boolean, default: false },
+    },
+  ],
+  userid: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
 });
 
+
 const usermodel = mongoose.model("users", User);
-const todomodel = mongoose.model("todo", todo);
+const todomodel = mongoose.model("todos", todo);
 
 module.exports = {
   todomodel,

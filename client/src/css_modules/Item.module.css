@@ -1,0 +1,37 @@
+.container{
+    width: 100%;
+    min-height: 20%;
+    border: 1px solid yellow;
+display: flex;
+justify-content: space-between;
+padding:5px;
+font-family: "Sour Gummy", sans-serif;
+
+}
+.main{
+    min-height:25px;
+    display: flex;
+font-size: large;
+}
+.options {
+    display: flex;
+    opacity: 0;           
+    transition: all 0.6s ease-in;
+    cursor: pointer;
+  }
+  
+  .container:hover .options {
+    opacity: 1;            
+  }
+.edit{
+margin-right: 15px;;
+}
+.checkbox{
+    margin-right: 5px;
+    margin-top: 2px;
+}
+.strikethrough{
+    opacity:50%;
+    font-style: italic;
+    text-decoration: line-through;
+}
