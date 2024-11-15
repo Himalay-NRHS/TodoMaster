@@ -72,6 +72,11 @@ function Todos() {
               <input
                 type="text"
                 id="input1"
+                onKeyDown={(e)=>{
+                  if(e.key=="Enter"){
+                    update()
+                  }
+                }}
                 className={styles.textInput}
                 value={input}
                 placeholder="Enter your next task"

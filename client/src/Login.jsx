@@ -13,10 +13,10 @@ function Login() {
         pass: password,
       })
       .then((res) => {
-      
+      console.log("res",res)
         const token = res.data.token;
         const objectid = res.data.id;
-        console.log("login done ", res);
+        console.log("login done ");
         localStorage.setItem("token", token);
         localStorage.setItem("objectid", objectid);
         navigate("/todos")
@@ -26,8 +26,7 @@ function Login() {
 alert("invalid credentials")     }
         console.log(err)});
 
-    console.log(email, password);
-  };
+    console.log('Login form submitted');};
 
   return (
     <div className="container">
