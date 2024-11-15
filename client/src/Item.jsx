@@ -1,22 +1,56 @@
 import React, { useState } from "react";
 import styles from "./css_modules/Item.module.css";
-import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-function Item({content}) {
-const [check , setCheck] = useState(false);
+function Item({content,key}) {
+const [check , setCheck] = useState(content.completed);
+const navigate = useNavigate();
+function update(){
+
+  const token = localStorage.getItem("token");
+  axios
+    .put(
+      "http://localhost:3000/update",
+      { task: content.task, completed: !check,taskid:content._id },
+      {
+        headers: {
+          authorization: `bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {console.log("update aDDED")})
+    .catch((err) => console.log(err));
+}
+
+function deleteone(){
+const token = localStorage.getItem("token");
+
+  axios
+  .put(
+    "http://localhost:3000/delete",
+    { taskid: content._id },
+    {
+      headers: {
+        authorization: `bearer ${token}`,
+      },
+    }
+  )
+  .then((res) => {console.log("deleted");navigate(0)})
+  .catch((err) => console.log( "nah err in axios bruhh",err));
 
 
-console.log(content)
-  function edit() {}
-
+}
   return (
     <div className={styles.container}>
       <div className={styles.main}>
         
         <div className={styles.checkbox}>
-          <input type="checkbox" onChange={()=>{
-            setCheck(!check);
+          <input type="checkbox"  defaultChecked={check} onChange={ async ()=>{
+           await setCheck(!check);
+            update();
+           
           }}/>
         </div>
         <div className={check ? styles.strikethrough : null}>
@@ -24,10 +58,8 @@ console.log(content)
         </div>
       </div>
       <div className={styles.options}>
-        <div className={styles.edit} onClick={edit}>
-          <MdEdit size={20} />
-        </div>
-        <div>
+       
+        <div onClick={deleteone}>
           <MdDelete size={20} />
         </div>
       </div>

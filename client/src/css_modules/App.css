@@ -1,14 +1,8 @@
-/* Reset some default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
+
   /* Body and background styling */
   body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    background-color: #66bfbf;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,7 +62,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+    width: 110%;
   }
   
   button.btn:hover {

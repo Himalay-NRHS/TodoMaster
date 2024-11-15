@@ -8,10 +8,8 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 function auth(req, res, next) {
-  console.log("auth called")
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  console.log("Extracted Token:", token); // Debugging line
   
   if (!token) {
     return res.status(401).send('Token required');
@@ -34,6 +32,7 @@ app.post("/login", async (req, res) => {
   const user = await usermodel.findOne({ useremail: email });
   if (!user) {
     console.log("error while finding that specific user");
+    res.send(405)
   } else if (user) {
     const ismatch = bcryptjs.compareSync(pass, user.password);
     console.log(ismatch ? 'Password is correct!' : 'Invalid password');
@@ -63,18 +62,14 @@ app.post("/signup", async (req, res) => {
     } else {
       console.log(username, useremail, password);
 
-      // Hash the password before storing it
       password = bcryptjs.hashSync(password, 10);
 
-      // Create the user in the database
       await usermodel.create({ username, useremail, password });
 
-      // Retrieve the user to get their _id
       const user = await usermodel.findOne({ useremail: useremail });
 
-      // Correct the todo object creation
       await todomodel.create({
-        todos: [{ task: "ntg", completed: false }],
+        todos: [],
         userid: user._id
       });
 
@@ -112,6 +107,34 @@ console.log("request came withh token ", req.userinfo)
     user,todos,name
   })
   })
+
+app.put("/update",auth, async (req,res)=>{
+try{
+  const newtask = req.body.task
+  const taskid = req.body.taskid
+  const check = req.body.completed
+  const user = await usermodel.findOne({useremail:req.userinfo})
+console.log("request came withh token ", req.userinfo ,newtask,taskid,check)
+  const result = await todomodel.findOneAndUpdate({ userid: user._id, "todos._id": taskid },{$set: { "todos.$.task":newtask } ,$set:{"todos.$.completed":check}}, { new: true });
+res.send(result)
+}
+catch(e){
+  console.log("error in updatetodos  ",e)
+}
+
+
+})
+app.put("/delete",auth, async (req,res)=>{
+try{
+  console.log("request came withh token in delete ")
+  const taskid = req.body.taskid
+  const user = await usermodel.findOne({useremail:req.userinfo})
+  const result = await todomodel.findOneAndUpdate({ userid: user._id },{$pull: { todos: { _id: taskid } } }, { new: true });
+res.send(result)
+}
+catch(e){
+  console.log("error in updatetodos  ",e)
+}})
 
 app.listen(3000,()=>{
   console.log("port running on 3000")

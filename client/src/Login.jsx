@@ -4,7 +4,6 @@ import axios from "axios";
 
 function Login() {
   const navigate = useNavigate(); 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     let email = event.target.email.value;
@@ -14,6 +13,7 @@ function Login() {
         pass: password,
       })
       .then((res) => {
+      
         const token = res.data.token;
         const objectid = res.data.id;
         console.log("login done ", res);
@@ -21,7 +21,10 @@ function Login() {
         localStorage.setItem("objectid", objectid);
         navigate("/todos")
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if(err.status==405){
+alert("invalid credentials")     }
+        console.log(err)});
 
     console.log(email, password);
   };

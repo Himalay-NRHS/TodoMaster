@@ -1,12 +1,10 @@
 
 .maincontainer{
-    background-color: grey;
     width: 100vw;
     height: 100vh;
 }
 .navbar{
-    background-color:aquamarine;
-    width: 100%;
+    width: 97%;
     height:10vh;
     display: flex;
     justify-content: space-between;
@@ -15,6 +13,7 @@
     padding-right: 2%;
     font-family:  "Sour Gummy", sans-serif;
     font-size:x-large;
+    
 }
 .logout{
     cursor: pointer;

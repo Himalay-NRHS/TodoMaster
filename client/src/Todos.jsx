@@ -20,13 +20,11 @@ function Todos() {
         },
       })
       .then((res) => {
-        console.log(res.data.todos.todos, "      ", res.data.name);
         settodos(res.data.todos.todos);
         setnames(res.data.name);
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(todos, name);
 
   function logout() {
     localStorage.removeItem("token");
@@ -37,6 +35,9 @@ function Todos() {
   }
   function update() {
     const token = localStorage.getItem("token");
+    if(input.length==0){
+      alert("enter something")
+      return}
     axios
       .post(
         "http://localhost:3000/addone",
@@ -48,7 +49,6 @@ function Todos() {
         }
       )
       .then((res) => {
-        console.log(res);
         setinput("");
         settodos((e) => [...e, { task: input, completed: false }]);
       })
@@ -57,14 +57,14 @@ function Todos() {
   return (
     <>
       <div className={styles.maincontainer}>
-        <navbar>
+        
           <div className={styles.navbar}>
             <div className={styles.logocontainer}> TODO-Master</div>
             <div className={styles.logout} onClick={logout}>
               Logout
             </div>
           </div>
-        </navbar>
+        
         <div className={styles.name}>{`hello ${name}`}</div>
         <div className={styles.todocontainer}>
           <div className={styles.enter}>
@@ -83,8 +83,8 @@ function Todos() {
             </div>
           </div>
           <div className={styles.container}>
-            {todos.map((todo, index) => (
-              <Item content={todo} key={index} />
+            {todos.map((todo,key) => (
+              <Item content={todo} key={key} />
             ))}
           </div>
         </div>
