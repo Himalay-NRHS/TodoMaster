@@ -136,7 +136,5 @@ catch(e){
   console.log("error in updatetodos  ",e)
 }})
 
-app.listen(3000,()=>{
-  console.log("port running on 3000")
-})
+
 module.exports = app; 
