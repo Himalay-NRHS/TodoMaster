@@ -3,12 +3,13 @@ import styles from "./css_modules/Item.module.css";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 
-function Item({}) {
+function Item({content}) {
 const [check , setCheck] = useState(false);
 
+
+console.log(content)
   function edit() {}
 
-  let content = "ntg for now llil nigga lmao";
   return (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -19,7 +20,7 @@ const [check , setCheck] = useState(false);
           }}/>
         </div>
         <div className={check ? styles.strikethrough : null}>
-        {content}
+        {content.task}
         </div>
       </div>
       <div className={styles.options}>

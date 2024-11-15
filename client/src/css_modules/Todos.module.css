@@ -16,7 +16,9 @@
     font-family:  "Sour Gummy", sans-serif;
     font-size:x-large;
 }
-
+.logout{
+    cursor: pointer;
+}
 .name{
 padding-left: 50px;
 padding-top: 20px;
@@ -53,7 +55,7 @@ padding-top: 20px;
     font-size: 30px;
     border: 1px solid  black;
     border-radius: 5px;
-    
+    cursor: pointer;
 }
 .container{
     padding: 10px;

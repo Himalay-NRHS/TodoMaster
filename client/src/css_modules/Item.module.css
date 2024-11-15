@@ -6,7 +6,7 @@ display: flex;
 justify-content: space-between;
 padding:5px;
 font-family: "Sour Gummy", sans-serif;
-
+margin: 5px 0px 5px 0px;
 }
 .main{
     min-height:25px;

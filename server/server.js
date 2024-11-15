@@ -8,6 +8,7 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 function auth(req, res, next) {
+  console.log("auth called")
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   console.log("Extracted Token:", token); // Debugging line
@@ -91,22 +92,10 @@ app.post("/signup", async (req, res) => {
 
 app.post("/addone", auth, async (req, res) => {
   try {
-    const data = req.body.data;
-    const user = await usermodel.findOne({ useremail: req.userinfo }); 
-
-    if (!user) {
-      return res.status(404).send({ message: 'User not found' });
-    }
-
-    const result = await todomodel.findOneAndUpdate(
-      { userid: user._id }, 
-      { $set: { todos: data } }, 
-      { new: true }
-    );
-
-    if (!result) {
-      return res.status(404).send({ message: 'Todos not found' });
-    }
+    console.log("addone called")
+    const user = await usermodel.findOne({ useremail: req.userinfo });
+    const todo = await todomodel.findOne({ userid: user._id });
+    const result = await todomodel.findOneAndUpdate({ userid: user._id },{$push: { todos: { task: req.body.task, completed: false } } }, { new: true });
 
     res.status(200).send({ message: 'Todos updated successfully', data: result });
   } catch (error) {
@@ -118,8 +107,9 @@ app.get("/gettodos",auth, async (req,res)=>{
 console.log("request came withh token ", req.userinfo)
   const user = await usermodel.findOne({useremail:req.userinfo})
   const todos = await todomodel.findOne({userid:user._id})
+  const name= user.username
   res.json({
-    user,todos
+    user,todos,name
   })
   })
 
