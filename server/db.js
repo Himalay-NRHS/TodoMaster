@@ -1,7 +1,6 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect("mongodb+srv://storagedrive344:Himu%40backend@cluster0.jszpd.mongodb.net/");
 
 const User = new mongoose.Schema({
   username: String,

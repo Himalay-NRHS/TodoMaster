@@ -2,8 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require('cors');
 
-//const { usermodel, todomodel } = require("./db.js");
-//const bcryptjs = require("bcryptjs");
+const { usermodel, todomodel } = require("./db.js");
+const bcryptjs = require("bcryptjs");
 const app = express();
 app.use(cors()); 
 app.use(express.json());
@@ -15,7 +15,8 @@ function auth(req, res, next) {
     return res.status(401).send('Token required');
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, 
+    'ntg', (err, decoded) => {
     if (err) {
       console.log("JWT Verification Error:", err); // Detailed error message
       return res.status(403).send('Invalid token');
@@ -40,7 +41,7 @@ app.post("/login", async (req, res) => {
     if(ismatch){
 
 
-      const token = jwt.sign(user.useremail, process.env.JWT_SECRET);
+      const token = jwt.sign(user.useremail, 'ntg');
       res.json({
         id : user._id,
         token:token
