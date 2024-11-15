@@ -59,3 +59,13 @@ padding-top: 20px;
 .container{
     padding: 10px;
 }
+@media(max-width:600px){
+
+    .todocontainer{
+        width: 80vw;
+        min-height: 40vh;
+    }
+    .name{
+        padding-left: 15px;
+    }
+}
