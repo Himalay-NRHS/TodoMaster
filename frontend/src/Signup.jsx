@@ -1,27 +1,30 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import "./css_modules/App.css";
-import axios from 'axios';
-
+import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate(); 
+  const BASE_URL = process.env.REACT_APP_BACKEND_URL; // Use environment variable for backend URL
+
   const handleSubmit = (event) => {
     event.preventDefault();
     let username = event.target.username.value;
     let email = event.target.email.value;
     let password = event.target.password.value;
 
-    axios.post("http://localhost:3000/signup",{
-      username: username,
-      useremail: email,
-      password: password
-    })
-    .then((res)=>{
-      navigate("/");
-      console.log(res)
-    })
-    .catch(err => console.log(err))
-    console.log('Signup form submitted');
+    axios
+      .post(`${BASE_URL}/signup`, { // Use environment variable
+        username: username,
+        useremail: email,
+        password: password,
+      })
+      .then((res) => {
+        navigate("/");
+        console.log("Signup successful:", res);
+      })
+      .catch((err) => console.log("Signup error:", err));
+
+    console.log("Signup form submitted");
   };
 
   return (

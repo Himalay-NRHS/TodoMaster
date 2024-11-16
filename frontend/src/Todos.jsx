@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./css_modules/Todos.module.css";
 import Item from "./Item.jsx";
 import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BACKEND_URL; // Access the backend URL from the environment variable
 
 function Todos() {
   const navigate = useNavigate();
@@ -11,10 +13,11 @@ function Todos() {
   const [todos, settodos] = useState([]);
   const [name, setnames] = useState("NULL");
   const [input, setinput] = useState("");
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const decoded = axios
-      .get("http://localhost:3000/gettodos", {
+    axios
+      .get(`${BASE_URL}/gettodos`, {
         headers: {
           authorization: `bearer ${token}`,
         },
@@ -30,17 +33,17 @@ function Todos() {
     localStorage.removeItem("token");
     localStorage.removeItem("objectid");
     navigate("/");
-
-
   }
+
   function update() {
     const token = localStorage.getItem("token");
-    if(input.length==0){
-      alert("enter something")
-      return}
+    if (input.length === 0) {
+      alert("Enter something");
+      return;
+    }
     axios
       .post(
-        "http://localhost:3000/addone",
+        `${BASE_URL}/addone`,
         { task: input },
         {
           headers: {
@@ -54,27 +57,26 @@ function Todos() {
       })
       .catch((err) => console.log(err));
   }
+
   return (
     <>
       <div className={styles.maincontainer}>
-        
-          <div className={styles.navbar}>
-            <div className={styles.logocontainer}> TODO-Master</div>
-            <div className={styles.logout} onClick={logout}>
-              Logout
-            </div>
+        <div className={styles.navbar}>
+          <div className={styles.logocontainer}>TODO-Master</div>
+          <div className={styles.logout} onClick={logout}>
+            Logout
           </div>
-        
-        <div className={styles.name}>{`hello ${name}`}</div>
+        </div>
+        <div className={styles.name}>{`Hello ${name}`}</div>
         <div className={styles.todocontainer}>
           <div className={styles.enter}>
             <div className={styles.task}>
               <input
                 type="text"
                 id="input1"
-                onKeyDown={(e)=>{
-                  if(e.key=="Enter"){
-                    update()
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    update();
                   }
                 }}
                 className={styles.textInput}
@@ -88,7 +90,7 @@ function Todos() {
             </div>
           </div>
           <div className={styles.container}>
-            {todos.map((todo,key) => (
+            {todos.map((todo, key) => (
               <Item content={todo} key={key} />
             ))}
           </div>

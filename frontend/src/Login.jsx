@@ -1,32 +1,39 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import "./css_modules/App.css";
 import axios from "axios";
 
 function Login() {
   const navigate = useNavigate(); 
+  const BASE_URL = process.env.REACT_APP_BACKEND_URL; // Use environment variable for backend URL
+
   const handleSubmit = (event) => {
     event.preventDefault();
     let email = event.target.email.value;
     let password = event.target.password.value;
-    axios.post("http://localhost:3000/login", {
+
+    axios
+      .post(`${BASE_URL}/login`, { // Use environment variable
         email: email,
         pass: password,
       })
       .then((res) => {
-      console.log("res",res)
+        console.log("res", res);
         const token = res.data.token;
         const objectid = res.data.id;
-        console.log("login done ");
+        console.log("login done");
         localStorage.setItem("token", token);
         localStorage.setItem("objectid", objectid);
-        navigate("/todos")
+        navigate("/todos");
       })
       .catch((err) => {
-        if(err.status==405){
-alert("invalid credentials")     }
-        console.log(err)});
+        if (err.response && err.response.status === 405) {
+          alert("Invalid credentials");
+        }
+        console.log(err);
+      });
 
-    console.log('Login form submitted');};
+    console.log("Login form submitted");
+  };
 
   return (
     <div className="container">

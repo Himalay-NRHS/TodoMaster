@@ -1,64 +1,69 @@
 import React, { useState } from "react";
 import styles from "./css_modules/Item.module.css";
 import { MdDelete } from "react-icons/md";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Item({content,key}) {
-const [check , setCheck] = useState(content.completed);
-const navigate = useNavigate();
-function update(){
+const BASE_URL = process.env.REACT_APP_BACKEND_URL; // Access the backend URL from environment variables
 
-  const token = localStorage.getItem("token");
-  axios
-    .put(
-      "http://localhost:3000/update",
-      { task: content.task, completed: !check,taskid:content._id },
-      {
-        headers: {
-          authorization: `bearer ${token}`,
-        },
-      }
-    )
-    .then((res) => {console.log("update aDDED")})
-    .catch((err) => console.log(err));
-}
+function Item({ content }) {
+  const [check, setCheck] = useState(content.completed);
+  const navigate = useNavigate();
 
-function deleteone(){
-const token = localStorage.getItem("token");
+  function update() {
+    const token = localStorage.getItem("token");
+    axios
+      .put(
+        `${BASE_URL}/update`, // Use the base URL from environment variables
+        { task: content.task, completed: !check, taskid: content._id },
+        {
+          headers: {
+            authorization: `bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => console.log("Task updated"))
+      .catch((err) => console.log("Error updating task", err));
+  }
 
-  axios
-  .put(
-    "http://localhost:3000/delete",
-    { taskid: content._id },
-    {
-      headers: {
-        authorization: `bearer ${token}`,
-      },
-    }
-  )
-  .then((res) => {console.log("deleted");navigate(0)})
-  .catch((err) => console.log( "nah err in axios bruhh",err));
+  function deleteone() {
+    const token = localStorage.getItem("token");
 
+    axios
+      .put(
+        `${BASE_URL}/delete`, // Use the base URL from environment variables
+        { taskid: content._id },
+        {
+          headers: {
+            authorization: `bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Task deleted");
+        navigate(0); // Refresh the page
+      })
+      .catch((err) => console.log("Error deleting task", err));
+  }
 
-}
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        
         <div className={styles.checkbox}>
-          <input type="checkbox"  defaultChecked={check} onChange={ async ()=>{
-           await setCheck(!check);
-            update();
-           
-          }}/>
+          <input
+            type="checkbox"
+            defaultChecked={check}
+            onChange={async () => {
+              await setCheck(!check);
+              update();
+            }}
+          />
         </div>
         <div className={check ? styles.strikethrough : null}>
-        {content.task}
+          {content.task}
         </div>
       </div>
       <div className={styles.options}>
-       
         <div onClick={deleteone}>
           <MdDelete size={20} />
         </div>
