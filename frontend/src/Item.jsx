@@ -4,7 +4,8 @@ import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"||process.env.REACT_APP_BACKEND_URL; // Use environment variable for backend URL
+const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"||process.env.REACT_APP_BACKEND_URL; //dont know why but .env variables arent working for me here, so i hardcoded all the variables here
+
 
 function Item({ content }) {
   const [check, setCheck] = useState(content.completed);

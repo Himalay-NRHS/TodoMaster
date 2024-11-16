@@ -5,7 +5,8 @@ import styles from "./css_modules/Todos.module.css";
 import Item from "./Item.jsx";
 import axios from "axios";
 
-const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"||process.env.REACT_APP_BACKEND_URL; // Use environment variable for backend URL
+const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"||process.env.REACT_APP_BACKEND_URL; //dont know why but .env variables arent working for me here, so i hardcoded all the variables here
+
 
 function Todos() {
   const navigate = useNavigate();

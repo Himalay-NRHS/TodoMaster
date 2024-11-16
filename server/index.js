@@ -4,11 +4,13 @@ const cors = require('cors');
 
 const { usermodel, todomodel } = require("./db.js");
 const bcryptjs = require("bcryptjs");
+//dont know why but .env variables arent working for me here, so i hardcoded all the variables here
+
 const app = express();
 app.use(cors({
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));app.use(express.json());
 function auth(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -21,7 +23,7 @@ function auth(req, res, next) {
   jwt.verify(token, 
     'ntg', (err, decoded) => {
     if (err) {
-      console.log("JWT Verification Error:", err); // Detailed error message
+      console.log("JWT Verification Error:", err);
       return res.status(403).send('Invalid token');
     }
 

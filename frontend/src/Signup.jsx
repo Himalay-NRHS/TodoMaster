@@ -4,7 +4,8 @@ import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate(); 
-  const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"||process.env.REACT_APP_BACKEND_URL; // Use environment variable for backend URL
+  const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"||process.env.REACT_APP_BACKEND_URL; //dont know why but .env variables arent working for me here, so i hardcoded all the variables here
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
