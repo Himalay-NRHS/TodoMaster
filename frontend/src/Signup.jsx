@@ -11,7 +11,7 @@ function Signup() {
     let username = event.target.username.value;
     let email = event.target.email.value;
     let password = event.target.password.value;
-
+console.log(BASE_URL)
     axios
       .post(`${BASE_URL}/signup`, { // Use environment variable
         username: username,
