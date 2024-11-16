@@ -4,7 +4,7 @@ import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate(); 
-  const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app/"; // Use environment variable for backend URL
+  const BASE_URL = "https://todo-backend-git-main-himalays-projects-3e1c1ff1.vercel.app"; // Use environment variable for backend URL
 
   const handleSubmit = (event) => {
     event.preventDefault();
