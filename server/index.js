@@ -26,7 +26,9 @@ function auth(req, res, next) {
     next();
   });
 }
-
+app.get("/", (req, res) => {
+  res.send("hithere");
+})
 app.post("/login", async (req, res) => {
   const { email, pass } = req.body;
 
