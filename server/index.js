@@ -6,9 +6,9 @@ const { usermodel, todomodel } = require("./db.js");
 const bcryptjs = require("bcryptjs");
 const app = express();
 app.use(cors({
-  origin: 'https://todo-frontend-j42i39g9q-himalays-projects-3e1c1ff1.vercel.app', // Allow requests from your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
 }));app.use(express.json());
 function auth(req, res, next) {
   const authHeader = req.headers['authorization'];
