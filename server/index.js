@@ -107,13 +107,14 @@ app.post("/addone", auth, async (req, res) => {
   }
 });
 app.get("/gettodos",auth, async (req,res)=>{
+  try{
 console.log("request came withh token ", req.userinfo)
   const user = await usermodel.findOne({useremail:req.userinfo})
   const todos = await todomodel.findOne({userid:user._id})
   const name= user.username
   res.json({
     user,todos,name
-  })
+  })}
   })
 
 app.put("/update",auth, async (req,res)=>{
